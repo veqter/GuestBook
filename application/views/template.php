@@ -33,17 +33,18 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
     <!-- Points to an external CSS style sheet -->
     <link rel="canonical" href="<?php echo base_url(); ?>">
-    
+
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="css/compiled.css">
+    <link rel="stylesheet" href="//cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css">
 
     <!-- jQuery library -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
     <!-- Latest compiled JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-
+    <script src="//cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
 </head>
 
 <body>
@@ -53,9 +54,10 @@ defined('BASEPATH') or exit('No direct script access allowed');
                 <?php $this->load->view("templates/header"); ?>
             </div>
         </div>
-    
+
+        <hr>
         <div class="row">
-            <div class="col-sm-10 m-auto">
+            <div class="col-sm-12 m-auto">
                 <?php
                 if (isset($content)) {
                     echo $content; // document pages
@@ -65,7 +67,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                 ?>
             </div>
         </div>
-        
+
         <hr>
         <div class="row footer">
             <div class="col-sm-10 ">

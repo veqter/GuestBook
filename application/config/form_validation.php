@@ -20,16 +20,11 @@ $config = array(
             'rules' => 'required|trim|min_length[8]|max_length[100]|xss_clean'
         )
     ),
-    'admin_setting' =>  array(
+    'new_entry' =>  array(
         array(
-            'field' => 'd_licence',
-            'label' => 'Default licences',
-            'rules' => 'required|trim|min_length[1]|max_length[3]|is_numeric|xss_clean'
-        ),
-        array(
-            'field' => 'd_storage',
-            'label' => 'Default storage',
-            'rules' => 'required|trim|min_length[1]|max_length[3]|is_numeric|xss_clean'
+            'field' => 'new_entry',
+            'label' => 'New Entry',
+            'rules' => 'required|trim|min_length[3]|max_length[255]|xss_clean'
         )
     )
 );

@@ -9,7 +9,7 @@ class Auth extends CI_Controller
         parent::__construct();
     }
 
-   
+
     /**
      * Login
      */
@@ -20,8 +20,8 @@ class Auth extends CI_Controller
         $user_loggin_in  = is_logged_in();
 
         if ($user_loggin_in) {
-            $user_id = get_user_id_session();
-            redirect('user');
+            $user_id = get_user_id_from_session();
+            redirect('user/add_entry/');
         }
 
         //get data from form
@@ -32,29 +32,24 @@ class Auth extends CI_Controller
 
         //run validation and if validatation result is true
         if ($this->form_validation->run('login') == TRUE) {
-            $whereClause = array(
-                'username' => $login_arr['username'],
-                'active' => 'active'
-            );
-            $user_id_exists = $this->Mcrudcommon->get_Single_Field('user_id', $whereClause, 'users');
+            $user = $this->MGuestBook->check_auth($login_arr['username'], $login_arr['pass']);
 
-            if ($user_id_exists) {
+            if ($user) {
                 //if user id exists then hash password and match it with database
-                $passHash = $this->Mcrudcommon->get_Single_Field('password_hash', $whereClause, 'users');
-                $passHash = $passHash[0]['password_hash'];
+                $passHash = $user->password;
                 if ($this->passwordhash->CheckPassword($login_arr['pass'], $passHash)) {
                     // if password hash matches
-                    $user_id = $this->Musers->get_user_id($login_arr['username'], $passHash);
+                    $user_id = $user->id;
+
                     if ($user_id) {
                         $loginActivity = array(
                             'user_id' => $user_id,
                             'message' => 'User Login',
-                            'username' => $login_arr['username'],
                             'ip' => $_SERVER['REMOTE_ADDR'],
                             'date' => date('Y-m-d H:i:s')
                         );
                         //activity log update - login(id,username,ip,datetime,message)
-                        $this->Mcrudcommon->Insert_In_Table("activity_log", $loginActivity);
+                        $this->MGuestBook->Insert_In_Table("activity_log", $loginActivity);
 
                         $sess_arr = array(
                             'user_id' => $user_id
@@ -62,13 +57,11 @@ class Auth extends CI_Controller
                         //session user data
                         $this->session->set_userdata($sess_arr);
 
-                        //if redirect present then get redirect or go to homepage set in user account
-                        if (isset($_SESSION['login_redirect']) && $_SESSION['login_redirect'] != '') {
-                            redirect($_SESSION['login_redirect']);
-                        }
-
-                        $data['login_data'] = $login_arr['username'];
-                        $this->redirect_To_Homepage($user_id);
+                        // //if redirect present then get redirect or go to homepage set in user account
+                        // if (isset($_SESSION['login_redirect']) && $_SESSION['login_redirect'] != '') {
+                        //     redirect($_SESSION['login_redirect']);
+                        // }
+                        redirect('user/add_entry/');
                     }
                 } else {
                     $this->session->set_flashdata('flash_msgFail', 'Incorrect Password. Please try again.');

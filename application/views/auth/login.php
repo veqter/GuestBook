@@ -5,19 +5,18 @@ defined('BASEPATH') or exit('No direct script access allowed');
 <div class="row">
     <div class="col-sm-12 ">
         <?php
-        // $msg = $this->session->flashdata('flash_msgSuccess');
-        // if ($msg) {
-        //     echo '<div class="alert alert-success">' . $msg . '</div>';
-        // }
-        // $msgFail = $this->session->flashdata('flash_msgFail');
-        // if ($msgFail) {
-        //     echo '<div class="alert alert-danger">' . $msgFail . '</div>';
-        // }
+        $msg = $this->session->flashdata('flash_msgSuccess');
+        if ($msg) {
+            echo '<div class="alert alert-success">' . $msg . '</div>';
+        }
+        $msgFail = $this->session->flashdata('flash_msgFail');
+        if ($msgFail) {
+            echo '<div class="alert alert-danger">' . $msgFail . '</div>';
+        }
         ?>
 
         <h2><?php echo lang('log_in'); ?></h2>
-        <hr />
-    
+
         <div class="row">
             <div class="col-sm-6 ">
                 <?php echo form_open(base_url() . 'login'); ?>
