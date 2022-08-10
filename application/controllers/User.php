@@ -71,6 +71,17 @@ class User extends CI_Controller
 
     public function delete_entry($id){
         $this->MGuestBook->delete_entry($id);
+        $user_id = get_user_id_from_session();
+        
+        $loginActivity = array(
+            'user_id' => $user_id,
+            'message' => 'Entry Deleted',
+            'e_id' => $id,
+            'ip' => $_SERVER['REMOTE_ADDR'],
+            'date' => date('Y-m-d H:i:s')
+        );
+
+        $this->MGuestBook->Insert_In_Table('activity_log', $loginActivity);
         $this->session->set_flashdata('flash_msgSuccess', 'Entry Deleted Successfully.');
         redirect('user/add_entry/');
     }
