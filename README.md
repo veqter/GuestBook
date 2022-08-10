@@ -13,12 +13,8 @@ and Virtual hosts entry in apache httpd-vhost.conf file
 ## Guests:
 
 #### username: guest1@test.com
-#### password: Guest2022
-
 #### username: guest2@test.com
-#### password: Guest2023
 
 ## Admin:
 
 #### username: admin1@test.com
-#### password: Admin2022
